@@ -15,14 +15,40 @@
                     <view key="view" contentMode="scaleToFill" id="ikO-69-yxq">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="select" translatesAutoresizingMaskIntoConstraints="NO" id="bE7-FU-p0o">
+                                <rect key="frame" x="20" y="70" width="374" height="336"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="comment" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="hFG-pk-kFH">
+                                <rect key="frame" x="20" y="431" width="374" height="34"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LY5-S8-zFt">
+                                <rect key="frame" x="157" y="528" width="101" height="60"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                <state key="normal" title="Upload"/>
+                                <connections>
+                                    <action selector="actionButtonClicked:" destination="xPQ-eA-fya" eventType="touchUpInside" id="een-Ey-lNP"/>
+                                </connections>
+                            </button>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="YCh-3u-GZS"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="Upload" image="u.circle.fill" catalog="system" id="wvw-vW-eNu"/>
+                    <connections>
+                        <outlet property="commentText" destination="hFG-pk-kFH" id="Avb-D4-Mhf"/>
+                        <outlet property="imageView" destination="bE7-FU-p0o" id="4OF-CJ-4Um"/>
+                        <outlet property="uploadButton" destination="LY5-S8-zFt" id="lpN-Ho-BVB"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FdD-98-gMg" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-496" y="182"/>
+            <point key="canvasLocation" x="-497.10144927536237" y="181.47321428571428"/>
         </scene>
         <!--Feed-->
         <scene sceneID="fdJ-Cz-ikE">
@@ -43,7 +69,7 @@
         <!--Tab Bar Controller-->
         <scene sceneID="9TD-UK-uSs">
             <objects>
-                <tabBarController id="xlu-c9-swt" sceneMemberID="viewController">
+                <tabBarController storyboardIdentifier="tabBar" id="xlu-c9-swt" sceneMemberID="viewController">
                     <navigationItem key="navigationItem" id="c2B-Bn-vgo"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="LBR-cm-hc7">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="49"/>
@@ -181,6 +207,7 @@
     <resources>
         <image name="f.circle.fill" catalog="system" width="128" height="121"/>
         <image name="s.circle.fill" catalog="system" width="128" height="121"/>
+        <image name="select" width="264" height="300"/>
         <image name="u.circle.fill" catalog="system" width="128" height="121"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
