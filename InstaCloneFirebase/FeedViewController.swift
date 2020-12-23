@@ -8,6 +8,7 @@
 import UIKit
 import Firebase
 import SDWebImage
+import OneSignal
 
 class FeedViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
@@ -19,6 +20,8 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
     var userImageArray = [String]()
     var documentIdArray = [String]()
     
+    let fireStoreDatabase = Firestore.firestore()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -27,12 +30,61 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         getDataFromFirestore()
         
+        // Push Notification
+        //OneSignal.postNotification(["contents": ["en": "Test Message"], "include_player_ids": ["a66fb8ed-0927-4423-8ec8-a337353db6d6"]])
+        
+        if let deviceState = OneSignal.getDeviceState() {
+            let userId = deviceState.userId
+            print("user Id: " + userId!)
+            
+            fireStoreDatabase.collection("PlayerId").whereField("email", isEqualTo: Auth.auth().currentUser!.email!).getDocuments { (snapshot, error) in
+                if error == nil {
+                    if snapshot?.isEmpty == false && snapshot != nil {
+                        for document in snapshot!.documents {
+                            if let playerIDFromFirebase = document.get("player_id") as? String {
+                                let documentId = document.documentID
+                                print("playerID From Firebase: " + playerIDFromFirebase)
+                                
+                                if userId != playerIDFromFirebase {
+                                    
+                                    let playerIdDictionary = ["email": Auth.auth().currentUser!.email!, "player_id": userId] as! [String: Any]
+                                    
+                                    self.fireStoreDatabase.collection("PlayerId").addDocument(data: playerIdDictionary) { (error) in
+                                        if error != nil {
+                                            print(error?.localizedDescription)
+                                        }
+                                    }
+                                    
+                                }
+                            }
+                            
+                        }
+                    } else {
+                        
+                        let playerIdDictionary = ["email": Auth.auth().currentUser!.email!, "player_id": userId] as! [String: Any]
+                        
+                        self.fireStoreDatabase.collection("PlayerId").addDocument(data: playerIdDictionary) { (error) in
+                            if error != nil {
+                                print(error?.localizedDescription)
+                            }
+                        }
+                        
+                    }
+                }
+            }
+            
+            
+            
+            
+        }
+        
+        
+
+        
     }
     
     func getDataFromFirestore() {
-        
-        let fireStoreDatabase = Firestore.firestore()
-        
+             
         fireStoreDatabase.collection("Posts").order(by: "date", descending: true).addSnapshotListener { (snapshot, error) in
             if error != nil {
                 print(error?.localizedDescription)

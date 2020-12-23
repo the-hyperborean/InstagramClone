@@ -21,8 +21,9 @@ class ViewController: UIViewController {
 
     @IBAction func signInClicked(_ sender: Any) {
         
+               
         if emailText.text != "" && passwordText.text != "" {
-            
+
             Auth.auth().signIn(withEmail: emailText.text!, password: passwordText.text!) { (authdata, error) in
                 if error != nil {
                     self.makeAlert(titleInput: "Error!", messageInput: error?.localizedDescription ?? "Error")
@@ -30,7 +31,7 @@ class ViewController: UIViewController {
                     self.performSegue(withIdentifier: "toFeedVC", sender: nil)
                 }
             }
-            
+
         } else {
             makeAlert(titleInput: "Error!", messageInput: "Username/Password!")
         }
